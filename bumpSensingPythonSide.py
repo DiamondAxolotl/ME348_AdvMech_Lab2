@@ -9,16 +9,6 @@ leftMotor=int(100)
 rightMotor=int(100)
 
 
-class Robotstate:
-    def on_enter(self):
-        pass
-    
-    def on_exit(self):
-        pass  
-
-class driving(Robotstate):
-    pass
-
 if __name__ == '__main__':
     ser=serial.Serial('/dev/ttyACM0',115200)
     #every time the serial port is opened, the arduino program will restart
@@ -34,10 +24,9 @@ if __name__ == '__main__':
 
         if ready ==1:
             sendString('/dev/ttyACM0',115200,'<'+str(leftMotor)+','+str(rightMotor)+'>',0.0005)
-            # ser.write(b'<'+bytes(str(leftMotor),'utf-8')+b','+bytes(str(rightMotor),'utf-8')+b'>')
-            #interestingly ser.write is sending proper data around 95% of the time in this function,
-            #and sending data 1 byte at a time using sendString is causing the 
-            # print('<'+str(leftMotor)+','+str(rightMotor)+'>')
+
+
+            
             if ser.in_waiting > 0:  
                 line = ser.readline().decode('utf-8')
                 # print(line)
