@@ -11,14 +11,22 @@ int x=0;
 int y=0;
 int z=0;
 
+int a=0;
+int b=0;
+int c=0;
+
 
 //=====================================================
 
 void setup() {
   Serial.begin(115200);
   pinMode(49, INPUT_PULLUP);
-  pinMode(51, INPUT_PULLUP);
+  pinMode(51, INPUT_PULLUP); //might have to reassign these to pins that the astar knows
   pinMode(53, INPUT_PULLUP);
+
+  pinMode(, INPUT_PULLUP);
+  pinMode(, INPUT_PULLUP); //pick these pins for yourself,
+  pinMode(, INPUT_PULLUP);
 
   pinMode(3, OUTPUT); //left motor
   pinMode(2,OUTPUT); //left motor
@@ -47,16 +55,21 @@ CommandMotors();
 //============================================
 
 void recvWithStartEndMarkers() {
+//this function is the most important one of the whole lab, read the blog post made my Robin2
+//some questions:
+      //whats the purpose of the start and end markers?
+      //Why bother making this code unblocking?
+      //
     static boolean recvInProgress = false;
     static byte ndx = 0;
     char startMarker = '<';
     char endMarker = '>';
     char rc;
-                                                     
+                                         
     while (Serial.available() > 0 && newData == false) {
         rc = Serial.read();
-                                                             
-                                                                  
+                                       
+
         if (recvInProgress == true) {
             if (rc != endMarker) {
                 receivedChars[ndx] = rc;
@@ -66,7 +79,8 @@ void recvWithStartEndMarkers() {
                 }
             }
             else {
-                receivedChars[ndx] = '\0'; // terminates the string, frankly unsure why I need this
+                receivedChars[ndx] = '\0'; // terminates the string, frankly unsure why I need 
+                                           //this but it breaks if I remove it. Bonus points if you find out why
                 recvInProgress = false;
                 ndx = 0;
                 newData = true;
@@ -83,9 +97,7 @@ void recvWithStartEndMarkers() {
 
 void parseData(){
 
-  //an interesting bug I found is that a char that was created in the Rpi and sent over to the arduino has a much higer chance
-  //of being squashed by other char's that are sent along with is, this was solved in the sendString() function written on
-  //the python side
+  //once the data has been recieved, this function turns those charichters into ints that are then sent to the motors. 
 
 
 
@@ -111,6 +123,10 @@ void SendBumpData(){
   x=digitalRead(49);
   y=digitalRead(51);
   z=digitalRead(53);
+
+  a=digitalRead();
+  b=digitalRead(); //gonna have to set these also
+  c=digitalRead();
   
 
   //Serial.print(receivedChars);
@@ -118,7 +134,13 @@ void SendBumpData(){
   Serial.print(',');
   Serial.print(y);
   Serial.print(',');
-  Serial.println(z);
+  Serial.print(z);
+  Serial.print(',');
+  Serial.print(a);
+  Serial.print(',');
+  Serial.print(b);
+  Serial.print(',');
+  Serial.println(c);
   newData = false; 
 }
 
@@ -127,4 +149,6 @@ void SendBumpData(){
 void CommandMotors(){  
   //analogWrite(3,leftMotor); 
   //analogWrite(2,rightMotor);
+
+  //uncomment this when you are ready for your robot to move
 }

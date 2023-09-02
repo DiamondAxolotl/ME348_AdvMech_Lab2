@@ -7,5 +7,6 @@ def sendString(port,baud,input,waitTime):
     ser=serial.Serial(port,baud)
     for x in input:
         ser.write(bytes(x,'utf-8'))
-        # ser.write("%s"%(x).encode())
         time.sleep(waitTime)
+
+#theres some stuff going on here, explain what this code does!
