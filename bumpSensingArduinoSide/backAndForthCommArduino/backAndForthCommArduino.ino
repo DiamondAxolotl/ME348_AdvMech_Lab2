@@ -10,6 +10,56 @@ boolean newData = false;
 }   
 
 void loop() {
-  Serial.println("<hello from arduino>");
 
+  recvWithStartEndMarkers();
+
+  if (newData == true){
+    
+    strcpy(tempChar, receivedChars);
+    parseData();
+    SendBumpData();
+    
+}
+
+}
+
+void recvWithStartEndMarkers() {
+//this function is the most important one of the whole lab, read the blog post made my Robin2
+//some questions:
+      //whats the purpose of the start and end markers?
+      //Why bother making this code unblocking?
+      //
+    static boolean recvInProgress = false;
+    //what is the purpose of this boolean?
+    
+    static byte ndx = 0;
+    char startMarker = '<';
+    char endMarker = '>';
+    char rc;
+                                         
+    while (Serial.available() > 0 && newData == false) {
+        rc = Serial.read();
+                                       
+
+        if (recvInProgress == true) {
+            if (rc != endMarker) {
+                receivedChars[ndx] = rc;
+                ndx++;
+                if (ndx >= numChars) {
+                    ndx = numChars - 1;
+                }
+            }
+            else {
+                receivedChars[ndx] = '\0'; // terminates the string, frankly unsure why I need 
+                                           //this but it breaks if I remove it. Bonus points if you find out why
+                recvInProgress = false;
+                ndx = 0;
+                newData = true;
+            }
+        }
+
+        else if (rc == startMarker) {
+            recvInProgress = true;
+        }
+    }
 }

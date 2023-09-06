@@ -33,6 +33,8 @@ if __name__ == '__main__':
             #methods works better than the other (I'm not totally sure myself even thought I wrote the sendString() function to solve 
             #this problem)
 
+            #why so I append '<' and '>' to the beginning and end of my message that I send to the arduino?
+
 
             if ser.in_waiting > 0:
                 line = ser.readline().decode('utf-8')
