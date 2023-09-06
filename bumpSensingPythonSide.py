@@ -2,22 +2,24 @@
 import serial
 import time
 import numpy as np
-import matplotlib as plt
+#import matplotlib as plt
 
 from sendStringScript import sendString
 leftMotor=int(100)
-rightMotor=int(100)
+rightMotor=int(100)      
 
 if __name__ == '__main__':
-    ser=serial.Serial('/dev/ttyACM0',115200) #input the name of the serial port you are using here
+    ser=serial.Serial('/dev/ttyACM0',115200)
     #every time the serial port is opened, the arduino program will restart, very convient!
     ser.reset_input_buffer()
     ready = 0
 
-    while True:  
+    while True: 
+
+        
         if ready == 0:
             line = ser.readline().decode('utf-8')
-            print(line)
+            print(line) 
             ready = 1 #we wait until arduino has sent its first full line (<arduino is ready>) line before sending anything to arduino, 
                     #this gives arduino time to set up, np matter how long that time is
             

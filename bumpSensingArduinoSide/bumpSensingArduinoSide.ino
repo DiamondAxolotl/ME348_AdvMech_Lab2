@@ -1,6 +1,6 @@
 #include <AStar32U4Motors.h>
 
-AStar32U4Motors m;
+AStar32U4Motors m; //read the documentation of this library to understand what functions to use to drive the motors and how to use them
 
 int leftMotor;
 int rightMotor;
@@ -19,6 +19,8 @@ int a=0;
 int b=0;
 int c=0;
 
+int starter =0;
+
 
 //=====================================================
 
@@ -31,7 +33,7 @@ void setup() {
   pinMode(5, INPUT_PULLUP);
   pinMode(7, INPUT_PULLUP); //pick these pins for yourself,
   pinMode(8, INPUT_PULLUP);
-
+  delay(10000); //this is a brand new issue I just found as of 9/5/23, if this delay does not get placed here then the program will never handshake
 Serial.println("<arduino is ready>");
 
 }
@@ -39,6 +41,9 @@ Serial.println("<arduino is ready>");
 //=====================================================
 
 void loop() {
+    //Serial.println("<arduino is ready>");
+
+
   recvWithStartEndMarkers();
 
   if (newData == true){
@@ -148,6 +153,8 @@ void SendBumpData(){
 //============================================
 
 void CommandMotors(){  
+
+  //read the 
 
   //m.setM1Speed(rightMotor);
   //m.setM2Speed(leftMotor);
