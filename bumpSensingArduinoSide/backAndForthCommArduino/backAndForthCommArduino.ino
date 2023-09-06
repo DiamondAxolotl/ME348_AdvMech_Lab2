@@ -65,5 +65,5 @@ void recvWithStartEndMarkers() {
 }
 
 void sendData(){
-  Serial.println(receivedChars);
+  Serial.println("recieved something");
 }

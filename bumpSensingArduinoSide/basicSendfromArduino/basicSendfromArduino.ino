@@ -1,15 +1,13 @@
- const byte numChars = 32;
-char receivedChars[numChars];
-char tempChar[numChars]; // temporary array used for parsing
-
-boolean newData = false;
   
-  void setup() {
+void setup() {
+  delay(10000);
     Serial.begin(115200);
+    Serial.println("resetting arduino");
  
 }   
 
 void loop() {
   Serial.println("<hello from arduino>");
+  delay(1000);
 
 }
