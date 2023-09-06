@@ -13,11 +13,10 @@ void loop() {
 
   recvWithStartEndMarkers();
 
+
   if (newData == true){
     
-    strcpy(tempChar, receivedChars);
-    parseData();
-    SendBumpData();
+    sendData();
     
 }
 
@@ -28,7 +27,8 @@ void recvWithStartEndMarkers() {
 //some questions:
       //whats the purpose of the start and end markers?
       //Why bother making this code unblocking?
-      //
+      //why not use the Arduino built in functions for reading serial data?
+      
     static boolean recvInProgress = false;
     //what is the purpose of this boolean?
     
@@ -62,4 +62,8 @@ void recvWithStartEndMarkers() {
             recvInProgress = true;
         }
     }
+}
+
+void sendData(){
+  Serial.println(receivedChars);
 }

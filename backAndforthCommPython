@@ -13,9 +13,9 @@ if __name__ == '__main__':
     ser.reset_input_buffer() #we clear the input buffer at the beginning of running any program to make sure
                              #that any bits left over in the buffer dont show up
     while True: 
-            
-            sendString('/dev/ttyACM0',115200,'<'+Str2Send+'>',0.0005)
-            # ser.write(b'<'+bytes(str(leftMotor),'utf-8')+b','+bytes(str(rightMotor),'utf-8')+b'>')
+            print('here')
+            #sendString('/dev/ttyACM0',115200,'<'+Str2Send+'>',0.0005)
+            ser.write(b'<'+bytes(Str2Send)+b'>')
 
             #theses are 2 seprate methods to send a string from the rpi to the arduino, you can use the serial moniter on the arduino
             #side to examine what the string looks like when it arrives to the arduino. What do you notice?

@@ -2,7 +2,6 @@
 import serial
 import time
 import numpy as np
-import matplotlib as plt
 def sendString(port,baud,input,waitTime):
     ser=serial.Serial(port,baud)
     for x in input:
