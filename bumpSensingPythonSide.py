@@ -9,7 +9,7 @@ leftMotor=int(100)
 rightMotor=int(100)
 
 if __name__ == '__main__':
-    ser=serial.Serial('/dev/ttyACM0',115200)
+    ser=serial.Serial('/dev/ttyACM0',115200) #input the name of the serial port you are using here
     #every time the serial port is opened, the arduino program will restart, very convient!
     ser.reset_input_buffer()
     ready = 0

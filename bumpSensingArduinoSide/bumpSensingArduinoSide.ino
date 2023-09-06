@@ -1,3 +1,7 @@
+#include <AStar32U4Motors.h>
+
+AStar32U4Motors m;
+
 int leftMotor;
 int rightMotor;
 
@@ -20,16 +24,13 @@ int c=0;
 
 void setup() {
   Serial.begin(115200);
-  pinMode(49, INPUT_PULLUP);
-  pinMode(51, INPUT_PULLUP); //might have to reassign these to pins that the astar knows
-  pinMode(53, INPUT_PULLUP);
+  pinMode(0, INPUT_PULLUP);
+  pinMode(1, INPUT_PULLUP); //might have to reassign these to pins that the astar knows
+  pinMode(4, INPUT_PULLUP);
 
-  pinMode(, INPUT_PULLUP);
-  pinMode(, INPUT_PULLUP); //pick these pins for yourself,
-  pinMode(, INPUT_PULLUP);
-
-  pinMode(3, OUTPUT); //left motor
-  pinMode(2,OUTPUT); //left motor
+  pinMode(5, INPUT_PULLUP);
+  pinMode(7, INPUT_PULLUP); //pick these pins for yourself,
+  pinMode(8, INPUT_PULLUP);
 
 Serial.println("<arduino is ready>");
 
@@ -120,13 +121,13 @@ void parseData(){
 //============================================
 void SendBumpData(){
   
-  x=digitalRead(49);
-  y=digitalRead(51);
-  z=digitalRead(53);
+  x=digitalRead(0);
+  y=digitalRead(1);
+  z=digitalRead(4);
 
-  a=digitalRead();
-  b=digitalRead(); //gonna have to set these also
-  c=digitalRead();
+  a=digitalRead(5);
+  b=digitalRead(7); //gonna have to set these also
+  c=digitalRead(8);
   
 
   //Serial.print(receivedChars);
@@ -147,8 +148,8 @@ void SendBumpData(){
 //============================================
 
 void CommandMotors(){  
-  //analogWrite(3,leftMotor); 
-  //analogWrite(2,rightMotor);
 
-  //uncomment this when you are ready for your robot to move
+  //m.setM1Speed(rightMotor);
+  //m.setM2Speed(leftMotor);
+  //uncomment to drive motors
 }
