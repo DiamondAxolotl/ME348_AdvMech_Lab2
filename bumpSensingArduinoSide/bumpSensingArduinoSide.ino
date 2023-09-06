@@ -33,7 +33,7 @@ void setup() {
   pinMode(5, INPUT_PULLUP);
   pinMode(7, INPUT_PULLUP); //pick these pins for yourself,
   pinMode(8, INPUT_PULLUP);
-  delay(10000); //this is a brand new issue I just found as of 9/5/23, if this delay does not get placed here then the program will never handshake
+  delay(5000); //this is a brand new issue I just found as of 9/5/23, if this delay does not get placed here then the program will never handshake
 Serial.println("<arduino is ready>");
 
 }
@@ -41,7 +41,6 @@ Serial.println("<arduino is ready>");
 //=====================================================
 
 void loop() {
-    //Serial.println("<arduino is ready>");
 
 
   recvWithStartEndMarkers();

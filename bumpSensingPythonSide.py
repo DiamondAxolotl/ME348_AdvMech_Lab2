@@ -2,7 +2,6 @@
 import serial
 import time
 import numpy as np
-#import matplotlib as plt
 
 from sendStringScript import sendString
 leftMotor=int(100)
@@ -46,7 +45,7 @@ if __name__ == '__main__':
                     y=int(line[1])
                     z=int(line[2])
 
-                    a=int(line[3])
+                    a=int(line[3])  
                     b=int(line[4])
                     c=int(line[5])
 
