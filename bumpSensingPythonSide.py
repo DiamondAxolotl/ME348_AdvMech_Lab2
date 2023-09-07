@@ -15,17 +15,31 @@ if __name__ == '__main__':
 
     while True: 
 
-        
-        if ready == 0:
+        if ser.in_waiting > 0:
             line = ser.readline().decode('utf-8')
-            print(line) 
-            ready = 1 #we wait until arduino has sent its first full line (<arduino is ready>) line before sending anything to arduino, 
-                    #this gives arduino time to set up, np matter how long that time is
-            
+                #ive just called 2 methods from the ser object, what do they do? read the documentation and find out!
+            line=line.split(',')
+                #this one i wont ask you about this one is pretty self explanitory
+            try:
+                    
+                x=int(line[0])
+                y=int(line[1])
+                z=int(line[2])
 
-        if ready ==1:
-            sendString('/dev/ttyACM0',115200,'<'+str(leftMotor)+','+str(rightMotor)+'>',0.0005)
-            # ser.write(b'<'+bytes(str(leftMotor),'utf-8')+b','+bytes(str(rightMotor),'utf-8')+b'>')
+                a=int(line[3])  
+                b=int(line[4])
+                c=int(line[5])
+
+                print([x,y,z,a,b,c])
+                
+            except:
+                print("packetLost") 
+                #why do I have this exepction? 
+
+
+
+        sendString('/dev/ttyACM0',115200,'<'+str(leftMotor)+','+str(rightMotor)+'>',0.0005)
+        #ser.write(b'<'+bytes(str(leftMotor),'utf-8')+b','+bytes(str(rightMotor),'utf-8')+b'>')
 
             #theses are 2 seprate methods to send a string from the rpi to the arduino, you can use the serial moniter on the arduino
             #side to examine what the string looks like when it arrives to the arduino. What do you notice?
@@ -34,27 +48,3 @@ if __name__ == '__main__':
             #this problem)
 
             #why so I append '<' and '>' to the beginning and end of my message that I send to the arduino?
-
-
-            if ser.in_waiting > 0:
-                line = ser.readline().decode('utf-8')
-                #ive just called 2 methods from the ser object, what do they do? read the documentation and find out!
-                line=line.split(',')
-                #this one i wont ask you about this one is pretty self explanitory
-                try:
-                    
-                    x=int(line[0])
-                    y=int(line[1])
-                    z=int(line[2])
-
-                    a=int(line[3])  
-                    b=int(line[4])
-                    c=int(line[5])
-
-                    print([x,y,z,a,b,c])
-                
-                except:
-                    print("packetLost") 
-                #why do I have this exepction? 
-
-                #your state machine can go here

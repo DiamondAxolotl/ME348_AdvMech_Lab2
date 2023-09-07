@@ -3,9 +3,9 @@ import serial
 import time
 import numpy as np
 
-from sendStringScript import sendString #what does this function do
+from sendStringScript import sendString
 
-Str2Send = '<handshake is happening>'
+Str2Send='1,1'
 
 if __name__ == '__main__':
     ser=serial.Serial("/dev/ttyACM0",115200)
@@ -13,9 +13,10 @@ if __name__ == '__main__':
     ser.reset_input_buffer()
     ser.reset_output_buffer() #we clear the input and output buffer at the beginning of running any program to make sure
                              #that any bits left over in the buffer dont show up
+
     while True: 
-            #sendString('/dev/ttyACM0',115200,'<'+Str2Send+'>',0.0005)
-            ser.write(Str2Send.encode('utf-8'))
+            sendString('/dev/ttyACM0',115200,'<'+Str2Send+'>',0.0005)
+            #ser.write(Str2Send.encode('utf-8'))
 
             #theses are 2 seprate methods to send a string from the rpi to the arduino, you can use the serial moniter on the arduino
             #side to examine what the string looks like when it arrives to the arduino. What do you notice?
