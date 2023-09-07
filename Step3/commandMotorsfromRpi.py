@@ -5,7 +5,7 @@ import numpy as np
 
 from sendStringScript import sendString
 
-Str2Send='1,1'
+String2Send='<150,10>'
 
 if __name__ == '__main__':
     ser=serial.Serial("/dev/ttyACM0",115200)
@@ -15,8 +15,8 @@ if __name__ == '__main__':
                              #that any bits left over in the buffer dont show up
 
     while True: 
-            sendString('/dev/ttyACM0',115200,'<'+Str2Send+'>',0.0005)
-            #ser.write(Str2Send.encode('utf-8'))
+            #sendString('/dev/ttyACM0',115200,String2Send,0.0005)
+            ser.write(String2Send.encode('utf-8'))
 
             #theses are 2 seprate methods to send a string from the rpi to the arduino, you can use the serial moniter on the arduino
             #side to examine what the string looks like when it arrives to the arduino. What do you notice?

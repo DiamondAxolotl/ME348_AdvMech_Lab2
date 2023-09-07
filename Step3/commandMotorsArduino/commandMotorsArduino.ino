@@ -23,17 +23,17 @@ void loop() {
 
 
   if (newData == true){
-    parseData(); 
+        
+    parseData();
     commandMotors();
     sendRecievedData();
-
     newData = false;
     //why am I setting newdata equil to false after I send data back to the rpi.
     //what would happen if this line was not here?
     
 }
-
 }
+
 
 void recvWithStartEndMarkers() {
 //this function is the most important one of the whole lab, read the blog post made my Robin2
@@ -80,30 +80,24 @@ void recvWithStartEndMarkers() {
 //====================================
 
 void parseData(){
-
-  //once the data has been recieved, this function turns those charichters into ints that are then sent to the motors. 
-
-
-
-  char *strtokIndexer; //doing char * allows strtok to increment across my string properly frankly im not sure why... my kingdom for a proper c++ class
-
   
-  strtokIndexer = strtok(tempChar,","); //sets strtokIndexer = to everything up to the first comma in tempChar
-  leftMotor = atoi(strtokIndexer); //converts strtokIndexer into a int
-  
+strcpy(tempChar,receivedChars); //copying recievedChar into tempChar so we dont alter recievedChar
 
-  strtokIndexer= strtok(NULL, ","); //setting the first input to null causes strtok to continue looking for commas in tempChar starting from where it left off, im not really sure why 
-  rightMotor = atoi(strtokIndexer);
+char *strIndexer = strtok(tempChar,",");
 
-  
+leftMotor = atoi(strIndexer);
 
+strIndexer = strtok(NULL,",");
 
-  //now that we have extracted the data from the Rpi as floats, we can use them to command actuators somewhere else in the code
+rightMotor = atoi(strIndexer);
+
 }
 
 //=====================================
 
 void sendRecievedData(){
+
+  
   Serial.print(leftMotor);
   Serial.print(',');
   Serial.println(rightMotor);
