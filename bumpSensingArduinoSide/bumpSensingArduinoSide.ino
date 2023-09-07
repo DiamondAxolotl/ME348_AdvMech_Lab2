@@ -19,8 +19,6 @@ int a=0;
 int b=0;
 int c=0;
 
-int starter =0;
-
 
 //=====================================================
 
@@ -31,10 +29,8 @@ void setup() {
   pinMode(4, INPUT_PULLUP);
 
   pinMode(5, INPUT_PULLUP);
-  pinMode(7, INPUT_PULLUP); //pick these pins for yourself,
+  pinMode(7, INPUT_PULLUP);
   pinMode(8, INPUT_PULLUP);
-  delay(5000); //this is a brand new issue I just found as of 9/5/23, if this delay does not get placed here then the program will never handshake
-Serial.println("<arduino is ready>");
 
 }
 
@@ -50,9 +46,11 @@ void loop() {
     strcpy(tempChar, receivedChars);
     parseData();
     SendBumpData();
-    
+    newData = false;
     
   }
+  printBumpData(); //fpr testing the arduino code on its own
+  
 CommandMotors();
 
 }
@@ -146,16 +144,42 @@ void SendBumpData(){
   Serial.print(b);
   Serial.print(',');
   Serial.println(c);
-  newData = false; 
 }
 
 //============================================
 
 void CommandMotors(){  
 
-  //read the 
+  //read the documentation for the functions that drive the motors in the astar library
 
   //m.setM1Speed(rightMotor);
   //m.setM2Speed(leftMotor);
   //uncomment to drive motors
+}
+
+
+void printBumpData(){
+  
+  x=digitalRead(0);
+  y=digitalRead(1);
+  z=digitalRead(4);
+
+  a=digitalRead(5);
+  b=digitalRead(7); //gonna have to set these also
+  c=digitalRead(8);
+  
+
+  //Serial.print(receivedChars);
+  Serial.print(x);
+  Serial.print(',');
+  Serial.print(y);
+  Serial.print(',');
+  Serial.print(z);
+  Serial.print(',');
+  Serial.print(a);
+  Serial.print(',');
+  Serial.print(b);
+  Serial.print(',');
+  Serial.println(c);
+  delay(1000);
 }
