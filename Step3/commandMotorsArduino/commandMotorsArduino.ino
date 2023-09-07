@@ -79,11 +79,11 @@ void recvWithStartEndMarkers() {
 
 //====================================
 
-void parseData(){ //this function takes a string and seperates it by the comma into 2 strings, then casts those strings to ints
+void parseData(){
   
 strcpy(tempChar,receivedChars); //copying recievedChar into tempChar so we dont alter recievedChar
 
-char *strIndexer = strtok(tempChar,",");
+char *strIndexer = strtok(tempChar,","); //dont worry about the *, this isnt a C class and I dont expect you to know how pointers work
 
 leftMotor = atoi(strIndexer);
 

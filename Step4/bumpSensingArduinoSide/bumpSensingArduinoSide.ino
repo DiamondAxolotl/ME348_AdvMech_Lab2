@@ -160,7 +160,7 @@ void CommandMotors(){
 
 
 
-//===========================TEST FUNCTIONS====================================
+//===========================FUNCTIONS USED FOR TESTING, NOT NEEDED FOR LAB====================================
 
 
 

@@ -9,7 +9,7 @@ rightMotor=int(100)
 
 x=int(1)
 y=int(1)
-z=int(1) #a bump sensor that is unactivated starts at 1, hence why these are all one
+z=int(1) #a bump sensor that is unactivated starts at 1 (because they are pullups), hence why these are all one
 a=int(1)
 b=int(1)
 c=int(1)
@@ -24,15 +24,10 @@ if __name__ == '__main__':
 
     while True:
         
-        #think of the default condition where no pairs of sensors are triggered as state 0, where the robot moves forward
+        #think of the below line as the default condition where no pairs of sensors are triggered as state 0, where the robot moves forward
         sendString('/dev/ttyACM0',115200,'<'+str(leftMotor)+','+str(rightMotor)+'>',0.0005)
         #ser.write(b'<'+bytes(str(leftMotor),'utf-8')+b','+bytes(str(rightMotor),'utf-8')+b'>')
 
-        #theses are 2 seprate methods to send a string from the rpi to the arduino, you can use the serial moniter on the arduino
-        #side to examine what the string looks like when it arrives to the arduino. What do you notice?
-        #is one of these 2 methods better than the other? which one? use the internet to try to figure out why one of these 
-        #methods works better than the other (I'm not totally sure myself even thought I wrote the sendString() function to solve 
-        #this problem)
 
         #why so I append '<' and '>' to the beginning and end of my message that I send to the arduino?
 
@@ -41,6 +36,7 @@ if __name__ == '__main__':
                 #ive just called 2 methods from the ser object, what do they do? read the documentation and find out!
             line=line.split(',')
                 #this one i wont ask you about this one is pretty self explanitory
+
             try:
                     
                 x=int(line[0])
@@ -60,7 +56,7 @@ if __name__ == '__main__':
 
 
        
-            
+            #rudimentery state machine
         if x < 1 and y < 1:
             sendString('/dev/ttyACM0',115200,'<'+str(-leftMotor)+','+str(-rightMotor)+'>',0.0005)
             time.sleep(2)
