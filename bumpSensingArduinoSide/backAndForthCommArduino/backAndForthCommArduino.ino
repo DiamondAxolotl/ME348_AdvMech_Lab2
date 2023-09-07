@@ -17,6 +17,10 @@ void loop() {
   if (newData == true){
     
     sendData();
+
+    newData = false;
+    //why am I setting newdata equil to false after I send data back to the rpi.
+    //what would happen if this line was not here?
     
 }
 
@@ -65,5 +69,5 @@ void recvWithStartEndMarkers() {
 }
 
 void sendData(){
-  Serial.println("recieved something");
+  Serial.println(receivedChars);
 }

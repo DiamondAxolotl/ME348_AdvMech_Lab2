@@ -5,7 +5,7 @@ import numpy as np
 
 from sendStringScript import sendString #what does this function do
 
-Str2Send = '<handshake is happening>'
+Str2Send = 'handshake is happening'
 
 if __name__ == '__main__':
     ser=serial.Serial("/dev/ttyACM0",115200)
@@ -14,10 +14,8 @@ if __name__ == '__main__':
     ser.reset_output_buffer() #we clear the input and output buffer at the beginning of running any program to make sure
                              #that any bits left over in the buffer dont show up
     while True: 
-            print('here')
-            #sendString('/dev/ttyACM0',115200,'<'+Str2Send+'>',0.0005)
-            ser.write(Str2Send.encode('utf-8'))
-            print('sending string')
+            sendString('/dev/ttyACM0',115200,'<'+Str2Send+'>',0.0005)
+            #ser.write(Str2Send.encode('utf-8'))
 
             #theses are 2 seprate methods to send a string from the rpi to the arduino, you can use the serial moniter on the arduino
             #side to examine what the string looks like when it arrives to the arduino. What do you notice?
@@ -29,6 +27,6 @@ if __name__ == '__main__':
 
 
             if ser.in_waiting > 0:
-                print('recieving string')
                 line = ser.readline().decode('utf-8')
+                print(line)
                 #ive just called 2 methods from the ser object, what do they do?
