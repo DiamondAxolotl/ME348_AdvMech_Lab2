@@ -46,7 +46,6 @@ void loop() {
     strcpy(tempChar, receivedChars); //make a copy of recievedChars so we can make changes to it and not change recievedChars 
     parseData();  
     SendBumpData();
-    
     //SendRecievedData(); //uncomment this (and make the neccicary changes to the Rpi code) to have the arduino send the Rpi back what it sent. Viewing the message the
                           //Rpi sends the arduino is important to make sure the Rpi isnt sending garbage
     newData = false;
@@ -104,19 +103,27 @@ void recvWithStartEndMarkers() {
 
 //============================================
 
-void parseData(){ //this function takes a string and seperates it by the comma into 2 strings, then casts those strings to ints
+void parseData(){
+
+  //once the data has been recieved, this function turns those charichters into ints that are then sent to the motors. 
+
+
+
+  char *strtokIndexer; //doing char * allows strtok to increment across my string properly frankly im not sure why... my kingdom for a proper c++ class
+
   
-strcpy(tempChar,receivedChars); //copying recievedChar into tempChar so we dont alter recievedChar
+  strtokIndexer = strtok(tempChar,","); //sets strtokIndexer = to everything up to the first comma in tempChar /0 //this line is broken
+  leftMotor = atoi(strtokIndexer); //converts strtokIndexer into a int
+  
 
-char *strIndexer = strtok(tempChar,",");
+  strtokIndexer= strtok(NULL, ","); //setting the first input to null causes strtok to continue looking for commas in tempChar starting from where it left off, im not really sure why 
+  rightMotor = atoi(strtokIndexer);
 
-leftMotor = atoi(strIndexer);
+  
 
-strIndexer = strtok(NULL,",");
 
-rightMotor = atoi(strIndexer);
-
-}  
+  //now that we have extracted the data from the Rpi as floats, we can use them to command actuators somewhere else in the code
+}
 
 //============================================
 void SendBumpData(){

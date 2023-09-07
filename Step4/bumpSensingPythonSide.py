@@ -5,15 +5,36 @@ import numpy as np
 
 from sendStringScript import sendString
 leftMotor=int(100)
-rightMotor=int(100)      
+rightMotor=int(100)
+
+x=int(1)
+y=int(1)
+z=int(1) #a bump sensor that is unactivated starts at 1, hence why these are all one
+a=int(1)
+b=int(1)
+c=int(1)
+
 
 if __name__ == '__main__':
     ser=serial.Serial('/dev/ttyACM0',115200)
     #every time the serial port is opened, the arduino program will restart, very convient!
     ser.reset_input_buffer()
     ready = 0
+    
 
-    while True: 
+    while True:
+        
+        #think of the default condition where no pairs of sensors are triggered as state 0, where the robot moves forward
+        sendString('/dev/ttyACM0',115200,'<'+str(leftMotor)+','+str(rightMotor)+'>',0.0005)
+        #ser.write(b'<'+bytes(str(leftMotor),'utf-8')+b','+bytes(str(rightMotor),'utf-8')+b'>')
+
+        #theses are 2 seprate methods to send a string from the rpi to the arduino, you can use the serial moniter on the arduino
+        #side to examine what the string looks like when it arrives to the arduino. What do you notice?
+        #is one of these 2 methods better than the other? which one? use the internet to try to figure out why one of these 
+        #methods works better than the other (I'm not totally sure myself even thought I wrote the sendString() function to solve 
+        #this problem)
+
+        #why so I append '<' and '>' to the beginning and end of my message that I send to the arduino?
 
         if ser.in_waiting > 0:
             line = ser.readline().decode('utf-8')
@@ -38,13 +59,21 @@ if __name__ == '__main__':
 
 
 
-        sendString('/dev/ttyACM0',115200,'<'+str(leftMotor)+','+str(rightMotor)+'>',0.0005)
-        #ser.write(b'<'+bytes(str(leftMotor),'utf-8')+b','+bytes(str(rightMotor),'utf-8')+b'>')
-
-            #theses are 2 seprate methods to send a string from the rpi to the arduino, you can use the serial moniter on the arduino
-            #side to examine what the string looks like when it arrives to the arduino. What do you notice?
-            #is one of these 2 methods better than the other? which one? use the internet to try to figure out why one of these 
-            #methods works better than the other (I'm not totally sure myself even thought I wrote the sendString() function to solve 
-            #this problem)
-
-            #why so I append '<' and '>' to the beginning and end of my message that I send to the arduino?
+       
+            
+        if x < 1 and y < 1:
+            sendString('/dev/ttyACM0',115200,'<'+str(-leftMotor)+','+str(-rightMotor)+'>',0.0005)
+            time.sleep(2)
+            sendString('/dev/ttyACM0',115200,'<'+str(-leftMotor)+','+str(rightMotor)+'>',0.0005)
+            time.sleep(.5)
+            sendString('/dev/ttyACM0',115200,'<'+str(leftMotor)+','+str(rightMotor)+'>',0.0005)
+            x=1
+            y=1
+        if z < 1 and a < 1:
+           #your code here
+           z=1
+           a=1
+        if b < 1 and c < 1:
+            #your code here
+            b=1
+            c=1

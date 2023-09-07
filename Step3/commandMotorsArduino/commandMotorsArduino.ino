@@ -79,7 +79,7 @@ void recvWithStartEndMarkers() {
 
 //====================================
 
-void parseData(){
+void parseData(){ //this function takes a string and seperates it by the comma into 2 strings, then casts those strings to ints
   
 strcpy(tempChar,receivedChars); //copying recievedChar into tempChar so we dont alter recievedChar
 
