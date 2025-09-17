@@ -73,29 +73,23 @@ if __name__ == '__main__':
             BP_MR = 1
             
         # # Avoid Right Obstacle
-        # if BP_FR < 1 and BP_R < 1:
-            
+        if BP_FR < 1 and BP_R < 1:
+            sendString('/dev/ttyACM0',115200,'<'+str(-leftMotor)+','+str(-rightMotor)+'>',0.0005)
+            time.sleep(2)
+            sendString('/dev/ttyACM0',115200,'<'+str(-leftMotor)+','+str(rightMotor)+'>',0.0005)
+            time.sleep(2)
+            BP_FR = 1
+            BP_R = 1
         # # Avoid Left Obstacle
-        # if BP_FL < 1 and BP_L < 1:
+        if BP_FL < 1 and BP_L < 1:
+            sendString('/dev/ttyACM0',115200,'<'+str(-leftMotor)+','+str(-rightMotor)+'>',0.0005)
+            time.sleep(2)
+            sendString('/dev/ttyACM0',115200,'<'+str(leftMotor)+','+str(-rightMotor)+'>',0.0005)
+            time.sleep(2)
+            BP_FL = 1
+            BP_L = 1
             
-        # if 
-            
-        # # E-Stop Command
-        # if BP_FL < 1 and BP_FR < 1:
-            
-        # if x < 1 and y < 1:
-        #     sendString('/dev/ttyACM0',115200,'<'+str(-leftMotor)+','+str(-rightMotor)+'>',0.0005)
-        #     time.sleep(2)
-        #     sendString('/dev/ttyACM0',115200,'<'+str(-leftMotor)+','+str(rightMotor)+'>',0.0005)
-        #     time.sleep(.5)
-        #     sendString('/dev/ttyACM0',115200,'<'+str(leftMotor)+','+str(rightMotor)+'>',0.0005)
-        #     x=1
-        #     y=1
-        # if z < 1 and a < 1:
-        #    #your code here
-        #    z=1
-        #    a=1
-        # if b < 1 and c < 1:
-        #     #your code here
-        #     b=1
-        #     c=1
+        # E-Stop Command
+        if BP_FL < 1 and BP_FR < 1:
+            sendString('/dev/ttyACM0',115200,'<'+str(0)+','+str(0)+'>',0.0005)
+            break
