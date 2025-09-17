@@ -7,12 +7,13 @@ from sendStringScript import sendString
 leftMotor=int(100)
 rightMotor=int(100)
 
-x=int(1)
-y=int(1)
-z=int(1) #a bump sensor that is unactivated starts at 1 (because they are pullups), hence why these are all one
-a=int(1)
-b=int(1)
-c=int(1)
+# F = Far, M = Middle, L = Left, R = Right
+BP_FL=int(1)
+BP_L=int(1)
+BP_ML=int(1) #a bump sensor that is unactivated starts at 1 (because they are pullups), hence why these are all one
+BP_MR=int(1)
+BP_R=int(1)
+BP_FR=int(1)
 
 
 if __name__ == '__main__':
@@ -30,6 +31,7 @@ if __name__ == '__main__':
 
 
         #why so I append '<' and '>' to the beginning and end of my message that I send to the arduino?
+        # Because the start and end markers in the arduino code are delineated with the <> symbols
 
         if ser.in_waiting > 0:
             line = ser.readline().decode('utf-8')
@@ -39,15 +41,15 @@ if __name__ == '__main__':
 
             try:
                     
-                x=int(line[0])
-                y=int(line[1])
-                z=int(line[2])
+                BP_FL = int(line[0])
+                BP_L = int(line[1])
+                BP_ML = int(line[2])
 
-                a=int(line[3])  
-                b=int(line[4])
-                c=int(line[5])
+                BP_MR = int(line[3])  
+                BP_R = int(line[4])
+                BP_FR = int(line[5])
 
-                print([x,y,z,a,b,c])
+                print([BP_FL, BP_L, BP_ML, BP_MR, BP_R, BP_FR])
                 
             except:
                 print("packetLost") 
@@ -57,19 +59,43 @@ if __name__ == '__main__':
 
        
             #rudimentery state machine
-        if x < 1 and y < 1:
+         
+        # Keep Driving
+            
+        # Avoid Head On Collision
+        if BP_ML < 1 and BP_MR <1:
             sendString('/dev/ttyACM0',115200,'<'+str(-leftMotor)+','+str(-rightMotor)+'>',0.0005)
             time.sleep(2)
             sendString('/dev/ttyACM0',115200,'<'+str(-leftMotor)+','+str(rightMotor)+'>',0.0005)
             time.sleep(.5)
             sendString('/dev/ttyACM0',115200,'<'+str(leftMotor)+','+str(rightMotor)+'>',0.0005)
-            x=1
-            y=1
-        if z < 1 and a < 1:
-           #your code here
-           z=1
-           a=1
-        if b < 1 and c < 1:
-            #your code here
-            b=1
-            c=1
+            BP_ML = 1
+            BP_MR = 1
+            
+        # # Avoid Right Obstacle
+        # if BP_FR < 1 and BP_R < 1:
+            
+        # # Avoid Left Obstacle
+        # if BP_FL < 1 and BP_L < 1:
+            
+        # if 
+            
+        # # E-Stop Command
+        # if BP_FL < 1 and BP_FR < 1:
+            
+        # if x < 1 and y < 1:
+        #     sendString('/dev/ttyACM0',115200,'<'+str(-leftMotor)+','+str(-rightMotor)+'>',0.0005)
+        #     time.sleep(2)
+        #     sendString('/dev/ttyACM0',115200,'<'+str(-leftMotor)+','+str(rightMotor)+'>',0.0005)
+        #     time.sleep(.5)
+        #     sendString('/dev/ttyACM0',115200,'<'+str(leftMotor)+','+str(rightMotor)+'>',0.0005)
+        #     x=1
+        #     y=1
+        # if z < 1 and a < 1:
+        #    #your code here
+        #    z=1
+        #    a=1
+        # if b < 1 and c < 1:
+        #     #your code here
+        #     b=1
+        #     c=1
